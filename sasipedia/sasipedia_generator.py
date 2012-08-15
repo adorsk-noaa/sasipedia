@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 
 import templates
@@ -17,6 +18,12 @@ class SASIPediaGenerator(object):
         # Setup the directory.
         if not os.path.exists(targetDir):
             os.makedirs(targetDir)
+
+        # Copy the assets dir.
+        thisDir = os.path.dirname(os.path.realpath(__file__))
+        assetsSrcDir = os.path.join(thisDir, "assets")
+        assetsTargetDir = os.path.join(targetDir, "assets")
+        shutil.copytree(assetsSrcDir, assetsTargetDir)
 
         # Create sections.
         sectionMenus = []
