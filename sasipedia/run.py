@@ -2,6 +2,7 @@ from sasipedia.sasipedia_generator import SASIPediaGenerator
 
 import sys
 import os
+import shutil
 import tempfile
 
 
@@ -9,7 +10,7 @@ def main():
     #targetDir = tempfile.mkdtemp(suffix=".sasipedia")
     targetDir = "/tmp/sasipedia"
     if os.path.exists(targetDir):
-        os.removedirs(targetDir)
+        shutil.rmtree(targetDir)
     os.mkdir(targetDir)
     print >> sys.stderr, "targetDir is: ", targetDir
 
@@ -20,7 +21,8 @@ def main():
         {
             'name': 'substrates',
             'label': 'Substrates',
-            'dir': os.path.join(dataDir, 'substrates')
+            'dir': os.path.join(dataDir, 'substrates'),
+            'menuPath': 'substrates/index.html',
         },
     ]
 

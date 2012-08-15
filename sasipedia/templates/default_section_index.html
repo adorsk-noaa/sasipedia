@@ -10,6 +10,7 @@
         <ul>
             {% for record in sectionData %}
             <li>
+                <a name="{{record.id}}"></a>
                 <h3 div class="title">{{record.label}}</h3>
 
                 {% if record.image  %}

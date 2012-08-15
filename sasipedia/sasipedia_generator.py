@@ -1,5 +1,7 @@
 import os
 import sys
+
+import templates
 from default_section_generator import DefaultSectionGenerator
 from csv_section_reader import CSVSectionReader
 
@@ -17,13 +19,26 @@ class SASIPediaGenerator(object):
             os.makedirs(targetDir)
 
         # Create sections.
-        sectionPaths = []
+        sectionMenus = []
         for section in sections:
-            sectionPath = self.generateSection(section, targetDir, dataDir)
-            sectionPaths.append(sectionPath)
+            sectionMenu = self.generateSection(section, targetDir, dataDir)
+            sectionMenus.append(sectionMenu)
+
+        # Define the index file path.
+        indexFile = os.path.join(targetDir, "index.html")
+
+        # Combine the section menus into a master menu.
+        menu = [{
+            'href': 'index.html',
+            'label': 'Overview',
+            'children': sectionMenus
+        }]
 
         # Create index page.
-        self.generateIndexPage(sectionPaths=sectionPaths)
+        self.generateIndexPage(
+            indexFile=indexFile, 
+            menu=menu
+        )
 
     def generateSection(self, section, targetDir, dataDir):
         """
@@ -45,13 +60,14 @@ class SASIPediaGenerator(object):
             sectionGenerator = self.getSectionGenerator(section)
 
         # Generate the section's metadata directory and return the 
-        # relative link.
+        # section's menu.
         sectionDir = section.get('name')
-        sectionGenerator.generateSection(
+        sectionMenu = sectionGenerator.generateSection(
             section=section,
             targetDir=os.path.join(targetDir, sectionDir),
             sectionData=sectionData
         )
+        return sectionMenu
 
     def getSectionGenerator(self, section):
         """
@@ -69,11 +85,18 @@ class SASIPediaGenerator(object):
         # Default generator is CSV generator.
         return CSVSectionReader()
 
-    def generateIndexPage(self, sectionPaths=[]):
+    def generateIndexPage(self, indexFile="", menu={}):
         """
         Generate a SASIPedia index page.
         """
-        pass
+        # Setup the index file.
+        fh = open(indexFile, "wb")
         # Make navigation menu for subsections on the left.
 
-        # Make overview page.
+        # Render the index file template.
+        template = templates.env.get_template('sasipedia_main_index.html')
+        content = template.render(
+            menu=menu
+        )
+        fh.write(content)
+        fh.close()

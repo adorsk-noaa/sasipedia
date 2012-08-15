@@ -31,8 +31,8 @@ class DefaultSectionGenerator(object):
             imagesDir="assets/images"
         )
 
-        # Return the index file path.
-        return indexFile
+        # Generate and return the section's menu.
+        return self.generateMenu(section=section, sectionData=sectionData)
 
     def generateIndexFile(self, section={}, sectionData=[], indexFile=None,
                           imagesDir=""):
@@ -52,5 +52,23 @@ class DefaultSectionGenerator(object):
         fh.write(content)
         fh.close()
 
+    def generateMenu(self, section={}, sectionData=[]):
+        rootPath = section.get('menuPath')
 
+        # Initialize menu with section link.
+        menu = {
+            'href': rootPath,
+            'label': section.get('label')
+        }
 
+        # If there were records, add menu items for them.
+        if sectionData:
+            menu['children'] = []
+            for record in sectionData:
+                menuItem = {
+                    'href': "%s#%s" % (rootPath, record.get('id')),
+                    'label': record.get('label')
+                }
+                menu['children'].append(menuItem)
+
+        return menu
