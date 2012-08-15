@@ -37,10 +37,7 @@ class SASIPediaGenerator(object):
             sectionReader = self.getSectionReader(section)
 
         # Get section data.
-        sectionData = sectionReader.readSection(
-            section=section,
-            dataDir=dataDir
-        )
+        sectionData = sectionReader.readSection(section=section)
 
         # Get section generator.
         sectionGenerator = section.get('generator')

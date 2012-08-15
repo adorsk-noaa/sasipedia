@@ -1,5 +1,6 @@
 import templates
 import os
+import shutil
 
 class DefaultSectionGenerator(object):
     """
@@ -10,24 +11,31 @@ class DefaultSectionGenerator(object):
         if not os.path.exists(targetDir):
             os.makedirs(targetDir)
 
-        # Setup the assets dirs.
-        for assetType in ['images']:
-            assetsDir = os.path.join(targetDir, "assets", assetType)
-            if not os.path.exists(assetsDir):
-                os.makedirs(assetsDir)
+        # Setup the assets dir.
+        assetsDir = os.path.join(targetDir, "assets")
+        if not os.path.exists(assetsDir):
+            os.makedirs(assetsDir)
+
+        # Copy images.
+        imagesSrcDir = os.path.join(section.get('dir'), 'images')
+        if os.path.exists(imagesSrcDir):
+            imagesTargetDir = os.path.join(assetsDir, "images")
+            shutil.copytree(imagesSrcDir, imagesTargetDir)
 
         # Generate the index file.
         indexFile = os.path.join(targetDir, "index.html")
         self.generateIndexFile(
             section=section,
             sectionData=sectionData,
-            indexFile=indexFile
+            indexFile=indexFile,
+            imagesDir="assets/images"
         )
 
         # Return the index file path.
         return indexFile
 
-    def generateIndexFile(self, section={}, sectionData=[], indexFile=None):
+    def generateIndexFile(self, section={}, sectionData=[], indexFile=None,
+                          imagesDir=""):
         """
         Generates a section index file from section data.
         """
@@ -38,7 +46,8 @@ class DefaultSectionGenerator(object):
         template = templates.env.get_template('default_section_index.html')
         content = template.render(
             section=section,
-            sectionData=sectionData
+            sectionData=sectionData,
+            imagesDir=imagesDir
         )
         fh.write(content)
         fh.close()

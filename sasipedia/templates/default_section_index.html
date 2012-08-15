@@ -2,15 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>{{ section.name }}</title>
+        <title>{{section.name}}</title>
     </head>
 
     <body>
-        <h2>{{ section.label }}</h2>
+        <h2>{{section.label}}</h2>
         <ul>
             {% for record in sectionData %}
             <li>
-                <h3 div class="title">{{ record.label }}</h3>
+                <h3 div class="title">{{record.label}}</h3>
+
+                {% if record.image  %}
+                <div class="image">
+                    <img src="{{imagesDir}}/{{record.image}}"/>
+                </div>
+                {% endif %}
 
                 <div class="description">
                     <p>
