@@ -1,4 +1,4 @@
-import sasipedia
+from sasipedia.sasipedia_generator import SASIPediaGenerator
 
 import sys
 import os
@@ -13,10 +13,13 @@ def main():
     dataDir = os.path.join(thisDir, "..", "testData")
 
     sections = [
-        {'name': 'substrates'},
+        {
+            'name': 'substrates',
+            'label': 'Substrates'
+        },
     ]
 
-    generator = sasipedia.SASIPediaGenerator()
+    generator = SASIPediaGenerator()
     generator.generateSASIPedia(
         targetDir=targetDir,
         dataDir=dataDir,
