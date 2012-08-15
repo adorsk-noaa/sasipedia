@@ -5,7 +5,7 @@
         {% block head %}
 
         {% block commonStyles %}
-        <link rel="stylesheet" href="{{baseUrl}}/assets/styles/style.css" />
+        <link rel="stylesheet" href="{{baseUrl}}assets/styles/style.css" />
         {% endblock %}
 
         <title>{% block title %}{% endblock %}</title>
@@ -13,18 +13,20 @@
     </head>
 
     <body>
-        <div id="content">
-            {% block content %}
+        <div class="inner">
+            <div id="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+            <div id="footer">
+                {% block footer %}
+                {% endblock %}
+            </div>
+
+            {% block scripts %}
+            <script type="text/javascript" src="{{baseUrl}}assets/js/jquery-1.7.2.min.js"></script>
             {% endblock %}
         </div>
-
-        <div id="footer">
-            {% block footer %}
-            {% endblock %}
-        </div>
-
-        {% block scripts %}
-        <script type="text/javascript" src="{{baseUrl}}assets/js/jquery-1.7.2.min.js"></script>
-        {% endblock %}
     </body>
 </html>

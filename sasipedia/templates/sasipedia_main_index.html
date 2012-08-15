@@ -3,24 +3,26 @@
 {% block title %}Metadata{% endblock %}
 
 {% block content %}
-<div id="navigation">
-    <ul class="menu">
-        {%- for item in menu recursive %}
-        <li class="menu-item">
+<div class="navigation-container">
+    <div id="navigation">
+        <ul class="menu">
+            {%- for item in menu recursive %}
+            <li class="menu-item">
             <a target="contentFrame" href="{{ item.href|e }}">{{item.label|e}}</a>
             {%- if item.children -%}
             <ul class="submenu">{{ loop(item.children) }}</ul>
             {%- endif %}
-        </li>
-        {%- endfor %}
-    </ul>
+            </li>
+            {%- endfor %}
+        </ul>
+    </div>
 </div>
 
-<div class="content">
+<div class="contentFrame-container">
     <iframe name="contentFrame" class="contentFrame">
     </iframe>
-
 </div>
+
 {% endblock %}
 
 {% block scripts %}

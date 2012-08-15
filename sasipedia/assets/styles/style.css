@@ -1,0 +1,29 @@
+body > .inner{
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    height: 800px;
+}
+
+#content{
+    height: 100%;
+    width: 100%;
+}
+
+.navigation-container{
+    height: 100%;
+    float: left;
+}
+
+.contentFrame-container{
+    height: 100%;
+    overflow: hidden;
+}
+
+.contentFrame {
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
+
