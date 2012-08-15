@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        {% block head %}
+
+        {% block commonStyles %}
+        <link rel="stylesheet" href="assets/styles/style.css" />
+        {% endblock %}
+
+        <title>{% block title %}{% endblock %}</title>
+        {% endblock %}
+    </head>
+
+    <body>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <div id="footer">
+            {% block footer %}
+            {% endblock %}
+        </div>
+
+        {% block commonScripts %}
+        <script type="text/javascript" href="assets/js/jquery-min.1.7.2.min.js"></script>
+        {% endblock %}
+    </body>
+</html>
