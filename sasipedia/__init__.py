@@ -1,33 +1,82 @@
 import os
+import sys
+from .csv_section_generator import CSVSectionGenerator
+from .csv_section_reader import CSVSectionReader
 
-def generateSASIpedia(targetDir=None, dataDir=None, sections=None):
+
+class SASIPediaGenerator(object):
     """
-    Generate a set of static 'SASIpedia' pages at the given target
-    directory.
+    A Class for generating SASIPedia metadata.
     """
+    def generateSASIPedia(self, targetDir=None, dataDir=None, sections=None):
+        """
+        Generate a set of static 'SASIpedia' pages at the given target
+        directory.
+        """
+        # Setup the directory.
+        if not os.path.exists(targetDir):
+            os.makedirs(targetDir)
 
-    # Setup the directory.
-    if not os.path.exists(targetDir):
-        os.makedirs(targetDir)
+        # Create sections.
+        sectionPaths = []
+        for section in sections:
+            sectionPath = self.generateSection(section, targetDir, dataDir)
+            sectionPaths.append(sectionPath)
 
-    # Create sections.
-    sectionPaths = []
-    for sectionName in sections:
-        sectionPath = generateSection(sectionName)
-        sectionPaths.push(sectionPath)
+        # Create index page.
+        self.generateIndexPage(sectionPaths=sectionPaths)
 
-    # Create index page.
-    generateIndexPage(sectionPaths=sectionPaths)
+    def generateSection(self, section, targetDir, dataDir):
+        """
+        Generate metadata for a section.
+        """
+        print >> sys.stderr, "section is: ", section
 
+        # Get section reader.
+        sectionReader = section.get('reader')
+        if not sectionReader:
+            sectionReader = self.getSectionReader(section)
 
-def generateSection(sectionName):
-    pass
-    
+        # Get section data.
+        sectionData = sectionReader.readSection(
+            section=section,
+            dataDir=dataDir
+        )
 
-def generateIndexPage(sectionPaths=[]):
-    pass
-    # Make navigation menu for subsections on the left.
+        # Get section generator.
+        sectionGenerator = section.get('generator')
+        if not sectionGenerator:
+            sectionGenerator = self.getSectionGenerator(section)
 
-    # Make overview page.
+        # Generate the section and return the link.
+        sectionDir = "fish"
+        sectionGenerator.generateSection(
+            targetDir=sectionDir,
+            section=section,
+            sectionData=sectionData
+        )
 
+    def getSectionGenerator(self, section):
+        """
+        Get a generator for a section.
+        """
 
+        # Default generator is CSV generator.
+        return CSVSectionGenerator()
+
+    def getSectionReader(self, section):
+        """
+        Get a reader for a section.
+        """
+
+        # Default generator is CSV generator.
+        return CSVSectionReader()
+
+    def generateIndexPage(self, sectionPaths=[]):
+        """
+        Generate a SASIPedia index page.
+        """
+        pass
+        # Make navigation menu for subsections on the left.
+
+        # Make overview page.
