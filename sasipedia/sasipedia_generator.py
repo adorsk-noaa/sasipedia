@@ -10,7 +10,8 @@ class SASIPediaGenerator(object):
     """
     A Class for generating SASIPedia metadata.
     """
-    def generateSASIPedia(self, targetDir=None, dataDir=None, sections=None):
+    def generateSASIPedia(self, targetDir=None, dataDir=None, sections=None,
+                          baseUrl=""):
         """
         Generate a set of static 'SASIpedia' pages at the given target
         directory.
@@ -28,7 +29,8 @@ class SASIPediaGenerator(object):
         # Create sections.
         sectionMenus = []
         for section in sections:
-            sectionMenu = self.generateSection(section, targetDir, dataDir)
+            sectionMenu = self.generateSection(section, targetDir, dataDir,
+                                               baseUrl="")
             sectionMenus.append(sectionMenu)
 
         # Define the index file path.
@@ -47,7 +49,7 @@ class SASIPediaGenerator(object):
             menu=menu
         )
 
-    def generateSection(self, section, targetDir, dataDir):
+    def generateSection(self, section={}, targetDir="", dataDir="", baseUrl=""):
         """
         Generate metadata for a section.
         """
@@ -72,7 +74,8 @@ class SASIPediaGenerator(object):
         sectionMenu = sectionGenerator.generateSection(
             section=section,
             targetDir=os.path.join(targetDir, sectionDir),
-            sectionData=sectionData
+            sectionData=sectionData,
+            baseUrl="%s../" % baseUrl
         )
         return sectionMenu
 
@@ -103,6 +106,7 @@ class SASIPediaGenerator(object):
         # Render the index file template.
         template = templates.env.get_template('sasipedia_main_index.html')
         content = template.render(
+            baseUrl="",
             menu=menu
         )
         fh.write(content)

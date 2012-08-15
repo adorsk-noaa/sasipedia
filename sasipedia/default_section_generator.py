@@ -6,7 +6,8 @@ class DefaultSectionGenerator(object):
     """
     Generates a metadata directory for a given section.
     """
-    def generateSection(self, section=None, targetDir=None, sectionData=None):
+    def generateSection(self, section=None, targetDir=None, sectionData=None,
+                        baseUrl=""):
         # Setup the target dir.
         if not os.path.exists(targetDir):
             os.makedirs(targetDir)
@@ -28,14 +29,15 @@ class DefaultSectionGenerator(object):
             section=section,
             sectionData=sectionData,
             indexFile=indexFile,
-            imagesDir="assets/images"
+            imagesDir="assets/images",
+            baseUrl=baseUrl
         )
 
         # Generate and return the section's menu.
         return self.generateMenu(section=section, sectionData=sectionData)
 
     def generateIndexFile(self, section={}, sectionData=[], indexFile=None,
-                          imagesDir=""):
+                          imagesDir="", baseUrl=""):
         """
         Generates a section index file from section data.
         """
@@ -45,9 +47,10 @@ class DefaultSectionGenerator(object):
         # Render the index file template.
         template = templates.env.get_template('default_section_index.html')
         content = template.render(
+            baseUrl=baseUrl,
             section=section,
             sectionData=sectionData,
-            imagesDir=imagesDir
+            imagesDir=imagesDir,
         )
         fh.write(content)
         fh.close()

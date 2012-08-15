@@ -3,10 +3,10 @@
 {% block title %}Metadata{% endblock %}
 
 {% block content %}
-<div class="navigation">
+<div id="navigation">
     <ul class="menu">
         {%- for item in menu recursive %}
-        <li>
+        <li class="menu-item">
             <a target="contentFrame" href="{{ item.href|e }}">{{item.label|e}}</a>
             {%- if item.children -%}
             <ul class="submenu">{{ loop(item.children) }}</ul>
@@ -19,7 +19,34 @@
 <div class="content">
     <iframe name="contentFrame" class="contentFrame">
     </iframe>
+
 </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type="text/javascript">
+$(document).ready(function(){
+    // Set contentFrame source based on url.
+    var $frame = $('.contentFrame');
+    var frameSource = 'overview.html';
+    var hash = window.location.hash;
+    var hashParts = hash.split('#');
+    if (hashParts.length > 1){
+        // Remove initial hash.
+        hashParts.shift();
+        // Rejoin remaining parts.
+        var frameSource = hashParts.join('#');
+    }
+    $frame.attr('src', frameSource);
+
+    // Set hash when menu link is clicked, for bookmarking and history.
+    $('#navigation .menu-item > a').on('click', function(){
+        window.location.hash = $(event.target).attr('href');
+    });     
+});       
+</script>
 {% endblock %}
 
 
