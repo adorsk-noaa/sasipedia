@@ -1,23 +1,37 @@
+html, body {
+    height: 100%;
+    min-width: 960px;
+}
+
 body > .inner{
-    margin-left: auto;
-    margin-right: auto;
-    width: 800px;
-    height: 800px;
+    height: 100%;
+    margin: 0 0 -325px;
 }
 
 #content{
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
-.navigation-container{
-    height: 100%;
-    float: left;
+.navigation-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 15px 0 30px 30px;
+    box-shadow: 0 0 20px #CCCCCC;
 }
 
 .contentFrame-container{
-    height: 100%;
-    overflow: hidden;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    bottom: 50px;
+    left: 260px;
 }
 
 #navigation .menu-item > .menu{
@@ -38,5 +52,4 @@ body > .inner{
     width: 100%;
     border: none;
 }
-
 
