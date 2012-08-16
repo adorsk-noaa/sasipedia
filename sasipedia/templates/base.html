@@ -4,7 +4,8 @@
     <head>
         {% block head %}
 
-        {% block commonStyles %}
+        {% block styles %}
+        <link rel="stylesheet" href="{{baseUrl}}assets/styles/reset.css" />
         <link rel="stylesheet" href="{{baseUrl}}assets/styles/style.css" />
         {% endblock %}
 
@@ -14,6 +15,12 @@
 
     <body>
         <div class="inner">
+
+            <div id="header">
+                {% block header %}
+                {% endblock %}
+            </div>
+
             <div id="content">
                 {% block content %}
                 {% endblock %}

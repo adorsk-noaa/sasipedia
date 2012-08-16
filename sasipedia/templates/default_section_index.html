@@ -2,6 +2,11 @@
 
 {% block title %}{{section.name}}{% endblock %}
 
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{baseUrl}}assets/styles/defaultSection.css" />
+{% endblock %}
+
 {% block content %}
         <h2>{{section.label}}</h2>
         <ul>
@@ -20,6 +25,8 @@
                     <p>
                         {{ record.description }}
                     </p>
+                </div>
+                <div class="clearfix">
                 </div>
             </li>
             {% endfor %}
