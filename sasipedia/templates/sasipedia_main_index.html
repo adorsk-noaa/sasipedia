@@ -4,7 +4,7 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{baseUrl}}assets/styles/indexStyle.css" />
+<link rel="stylesheet" href="{{baseUrl}}assets/styles/mainIndex.css" />
 {% endblock %}
 
 {% block header %}
@@ -18,7 +18,7 @@
         <div id="navigation">
             <ul class="menu">
                 {%- for item in menuItems recursive %}
-                <li class="menu-item">
+                <li class="menu-item {%- if not item.children %} menu-leaf{%- endif %}">
                 <a target="contentFrame" href="{{ item.href|e }}">{{item.label|e}}</a>
                 {%- if item.children -%}
                 <ul class="menu">{{ loop(item.children) }}</ul>
@@ -55,10 +55,12 @@ $(document).ready(function(){
         
         // Disable all menus and items.
         $('.menu-item', $nav).removeClass('active');
+        $('.menu-item', $nav).removeClass('selected');
 
         // Set menu selection.
         var $selected = $('.menu-item > a[href="' + frameSource + '"]', $nav);
-        $selected.addClass("active");
+        var $selectedMenuItem = $selected.closest('.menu-item');
+        $selectedMenuItem.addClass("active selected");
 
         // Expand menus.
         $selected.parentsUntil($nav, '.menu-item').addClass('active');

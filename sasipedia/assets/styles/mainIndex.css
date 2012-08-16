@@ -43,7 +43,7 @@ body > .inner{
     top: 0;
     left: 0;
     bottom: 0;
-    width: 200px;
+    width: 300px;
     overflow-x: hidden;
     overflow-y: scroll;
     box-shadow: 5px 0 5px -2px #CCCCCC;
@@ -52,7 +52,7 @@ body > .inner{
 
 .navigation-container > .inner{
     height: 100%;
-    padding-left: 20px;
+    padding: 0 15px;
 }
 
 .contentFrame-container{
@@ -60,7 +60,7 @@ body > .inner{
     top: 0;
     right: 0;
     bottom: 0px;
-    left: 200px;
+    left: 300px;
 }
 
 .contentFrame-container > .inner{
@@ -77,15 +77,18 @@ body > .inner{
     margin-bottom: 10px;
     list-style-type: none;
     font-size: 100%;
+    padding: 2px 5px;
 }
 
 #navigation .menu-item > a{
     color: inherit;
     text-decoration: none;
+    padding: 2px;
 }
 
 #navigation .menu-item > a:hover{
     text-decoration: underline;
+    background-color: #dedede;
 }
 
 #navigation .menu .menu .menu-item > a:before{
@@ -105,8 +108,9 @@ body > .inner{
     display: block;
 }
 
-#navigation .menu-item.active > a{
+#navigation .menu-item.selected > a{
     font-weight: bold;
+    background-color: #dedede;
 }
 
 #contentFrame {

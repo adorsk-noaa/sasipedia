@@ -1,3 +1,17 @@
 .clearfix{
     clear: both;
 }
+
+p {
+    margin: 1em 0;
+}
+
+em {
+    font-style: italic;
+}
+
+strong{
+    font-weight: bold;
+}
+
+
