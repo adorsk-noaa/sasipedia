@@ -22,7 +22,7 @@
 
 <div class="contentFrame-container">
     <div class="inner">
-        <iframe name="contentFrame" id="contentFrame" src="overview.html" scrolling="no">
+        <iframe name="contentFrame" id="contentFrame" src="overview.html">
         </iframe>
     </div>
 </div>
@@ -68,7 +68,7 @@ $(document).ready(function(){
     }
 
     // Set hash when menu link is clicked, for bookmarking and history.
-    $('.menu-item > a', $nav).on('click', function(){
+    $('.menu-item > a', $nav).on('click', function(event){
         href = $(event.target).attr('href');
         window.location.hash = href;
         $contentFrame.attr('src', href);
