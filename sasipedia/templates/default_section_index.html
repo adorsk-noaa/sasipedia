@@ -10,20 +10,20 @@
 {% block content %}
         <h2>{{section.label}}</h2>
         <ul>
-            {% for record in sectionData %}
+            {% for row in sectionData['rows'] %}
             <li>
-                <a name="{{record.id}}"></a>
-                <h3 div class="title">{{record.label}}</h3>
+                <a name="{{row.id}}"></a>
+                <h3 div class="title">{{row.label}}</h3>
 
-                {% if record.image  %}
+                {% if row.image  %}
                 <div class="image">
-                    <img src="{{imagesDir}}/{{record.image}}"/>
+                    <img src="{{imagesDir}}/{{row.image}}"/>
                 </div>
                 {% endif %}
 
                 <div class="description">
                     <p>
-                        {{ record.description }}
+                        {{ row.description }}
                     </p>
                 </div>
                 <div class="clearfix">

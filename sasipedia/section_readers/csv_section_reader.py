@@ -10,7 +10,10 @@ class CSVSectionReader(object):
     def readSection(self, section):
         sectionFile = os.path.join(section['dir'], "%s.csv" % section['name'])
         reader = csv.DictReader(open(sectionFile, "rb"))
-        records = [record for record in reader]
-        return records
+        rows = [row for row in reader]
+        return {
+            'fieldnames': reader.fieldnames,
+            'rows': rows,
+        }
 
 

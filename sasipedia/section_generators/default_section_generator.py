@@ -64,13 +64,13 @@ class DefaultSectionGenerator(object):
             'label': section.get('label')
         }
 
-        # If there were records, add menu items for them.
-        if sectionData:
+        # If there were rows , add menu items for them.
+        if sectionData.get('rows'):
             menu['children'] = []
-            for record in sectionData:
+            for row in sectionData['rows']:
                 menuItem = {
-                    'href': "%s#%s" % (rootPath, record.get('id')),
-                    'label': record.get('label')
+                    'href': "%s#%s" % (rootPath, row.get('id')),
+                    'label': row.get('label')
                 }
                 menu['children'].append(menuItem)
 
