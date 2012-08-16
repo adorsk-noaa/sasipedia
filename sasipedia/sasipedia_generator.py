@@ -33,21 +33,31 @@ class SASIPediaGenerator(object):
                                                baseUrl="")
             sectionMenus.append(sectionMenu)
 
+        # Initialize list of menu items.
+        menuItems = []
+
+        # Create overview page.
+        overviewFile = os.path.join(targetDir, "overview.html")
+        overviewFh = open(overviewFile, "wb")
+        overviewFh.write("foo")
+        overviewFh.close()
+        menuItems.append({
+            "label": "Overview",
+            "href": "overview.html"
+        })
+
         # Define the index file path.
         indexFile = os.path.join(targetDir, "index.html")
 
-        # Combine the section menus into a master menu.
-        menu = [{
-            'href': 'index.html',
-            'label': 'Overview',
-            'children': sectionMenus
-        }]
+        # Add the section menus.
+        menuItems.extend(sectionMenus)
 
         # Create index page.
         self.generateIndexPage(
             indexFile=indexFile, 
-            menu=menu
+            menuItems=menuItems
         )
+
 
     def generateSection(self, section={}, targetDir="", dataDir="", baseUrl=""):
         """
@@ -95,7 +105,7 @@ class SASIPediaGenerator(object):
         # Default generator is CSV generator.
         return CSVSectionReader()
 
-    def generateIndexPage(self, indexFile="", menu={}):
+    def generateIndexPage(self, indexFile="", menuItems=[]):
         """
         Generate a SASIPedia index page.
         """
@@ -107,7 +117,7 @@ class SASIPediaGenerator(object):
         template = templates.env.get_template('sasipedia_main_index.html')
         content = template.render(
             baseUrl="",
-            menu=menu
+            menuItems=menuItems
         )
         fh.write(content)
         fh.close()

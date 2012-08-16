@@ -6,11 +6,11 @@
 <div class="navigation-container">
     <div id="navigation">
         <ul class="menu">
-            {%- for item in menu recursive %}
+            {%- for item in menuItems recursive %}
             <li class="menu-item">
             <a target="contentFrame" href="{{ item.href|e }}">{{item.label|e}}</a>
             {%- if item.children -%}
-            <ul class="submenu">{{ loop(item.children) }}</ul>
+            <ul class="menu">{{ loop(item.children) }}</ul>
             {%- endif %}
             </li>
             {%- endfor %}
@@ -19,7 +19,7 @@
 </div>
 
 <div class="contentFrame-container">
-    <iframe name="contentFrame" class="contentFrame">
+    <iframe name="contentFrame" id="contentFrame" src="overview.html">
     </iframe>
 </div>
 
@@ -30,9 +30,27 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+    // Get elements.
+    var $nav = $('#navigation');
+    var $contentFrame= $('#contentFrame');
+
+    // Define function to match the nav menu to the content frame.
+    var updateNavMenu = function(){
+        // Get the frame source.
+        var frameSource = $contentFrame.attr('src');
+        
+        // Disable all menus and items.
+        $('.menu-item', $nav).removeClass('active');
+
+        // Set menu selection.
+        var $selected = $('.menu-item > a[href="' + frameSource + '"]', $nav);
+        $selected.addClass("active");
+
+        // Expand menus.
+        $selected.parentsUntil($nav, '.menu-item').addClass('active');
+    };
+
     // Set contentFrame source based on url.
-    var $frame = $('.contentFrame');
-    var frameSource = 'overview.html';
     var hash = window.location.hash;
     var hashParts = hash.split('#');
     if (hashParts.length > 1){
@@ -40,12 +58,17 @@ $(document).ready(function(){
         hashParts.shift();
         // Rejoin remaining parts.
         var frameSource = hashParts.join('#');
+
+        $contentFrame.attr('src', frameSource);
+        updateNavMenu();
     }
-    $frame.attr('src', frameSource);
 
     // Set hash when menu link is clicked, for bookmarking and history.
-    $('#navigation .menu-item > a').on('click', function(){
-        window.location.hash = $(event.target).attr('href');
+    $('.menu-item > a', $nav).on('click', function(){
+        href = $(event.target).attr('href');
+        window.location.hash = href;
+        $contentFrame.attr('src', href);
+        updateNavMenu();
     });     
 });       
 </script>

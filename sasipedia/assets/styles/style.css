@@ -20,7 +20,20 @@ body > .inner{
     overflow: hidden;
 }
 
-.contentFrame {
+#navigation .menu-item > .menu{
+    display: none;
+}
+
+#navigation .menu-item.active > .menu{
+    display: block;
+}
+
+#navigation .menu-item.active > a{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#contentFrame {
     height: 100%;
     width: 100%;
     border: none;
