@@ -1,12 +1,15 @@
-import templates
 import os
 import shutil
 
-class DefaultSectionGenerator(object):
+
+class SectionRenderer(object):
+
+    indexTemplate = None
+
     """
-    Generates a metadata directory for a given section.
+    Renders a metadata directory for a given section.
     """
-    def generateSection(self, section=None, targetDir=None, sectionData=None,
+    def renderSection(self, section=None, targetDir=None, sectionData=None,
                         baseUrl=""):
         # Setup the target dir.
         if not os.path.exists(targetDir):
@@ -25,7 +28,7 @@ class DefaultSectionGenerator(object):
 
         # Generate the index file.
         indexFile = os.path.join(targetDir, "index.html")
-        self.generateIndexFile(
+        self.renderIndexFile(
             section=section,
             sectionData=sectionData,
             indexFile=indexFile,
@@ -36,17 +39,16 @@ class DefaultSectionGenerator(object):
         # Generate and return the section's menu.
         return self.generateMenu(section=section, sectionData=sectionData)
 
-    def generateIndexFile(self, section={}, sectionData=[], indexFile=None,
+    def renderIndexFile(self, section={}, sectionData=[], indexFile=None,
                           imagesDir="", baseUrl=""):
         """
-        Generates a section index file from section data.
+        Renders a section index file from section data.
         """
         # Setup the index file.
         fh = open(indexFile, "wb")
 
         # Render the index file template.
-        template = templates.env.get_template('default_section_index.html')
-        content = template.render(
+        content = self.indexTemplate.render(
             baseUrl=baseUrl,
             section=section,
             sectionData=sectionData,
@@ -55,23 +57,5 @@ class DefaultSectionGenerator(object):
         fh.write(content)
         fh.close()
 
-    def generateMenu(self, section={}, sectionData=[]):
-        rootPath = section.get('menuPath')
-
-        # Initialize menu with section link.
-        menu = {
-            'href': rootPath,
-            'label': section.get('label')
-        }
-
-        # If there were rows , add menu items for them.
-        if sectionData.get('rows'):
-            menu['children'] = []
-            for row in sectionData['rows']:
-                menuItem = {
-                    'href': "%s#%s" % (rootPath, row.get('id')),
-                    'label': row.get('label')
-                }
-                menu['children'].append(menuItem)
-
-        return menu
+    def generateMenu(self):
+        pass

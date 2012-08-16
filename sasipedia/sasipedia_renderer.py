@@ -4,16 +4,16 @@ import sys
 
 import templates
 import section_readers
-import section_generators
+import section_renderers
 
-class SASIPediaGenerator(object):
+class SASIPediaRenderer(object):
     """
-    A Class for generating SASIPedia metadata.
+    A Class for rendering SASIPedia metadata.
     """
-    def generateSASIPedia(self, targetDir=None, dataDir=None, sections=None,
+    def renderSASIPedia(self, targetDir=None, dataDir=None, sections=None,
                           baseUrl=""):
         """
-        Generate a set of static 'SASIpedia' pages at the given target
+        Render a set of static 'SASIpedia' pages at the given target
         directory.
         """
         # Setup the directory.
@@ -29,7 +29,7 @@ class SASIPediaGenerator(object):
         # Create sections.
         sectionMenus = []
         for section in sections:
-            sectionMenu = self.generateSection(section, targetDir, dataDir,
+            sectionMenu = self.renderSection(section, targetDir, dataDir,
                                                baseUrl="")
             sectionMenus.append(sectionMenu)
 
@@ -53,13 +53,13 @@ class SASIPediaGenerator(object):
         menuItems.extend(sectionMenus)
 
         # Create index page.
-        self.generateIndexPage(
+        self.renderIndexPage(
             indexFile=indexFile, 
             menuItems=menuItems
         )
 
 
-    def generateSection(self, section={}, targetDir="", dataDir="", baseUrl=""):
+    def renderSection(self, section={}, targetDir="", dataDir="", baseUrl=""):
         """
         Generate metadata for a section.
         """
@@ -74,14 +74,14 @@ class SASIPediaGenerator(object):
         sectionData = sectionReader.readSection(section=section)
 
         # Get section generator.
-        sectionGenerator = section.get('generator')
-        if not sectionGenerator:
-            sectionGenerator = self.getSectionGenerator(section)
+        sectionRenderer= section.get('renderer')
+        if not sectionRenderer:
+            sectionRenderer = self.getSectionRenderer(section)
 
         # Generate the section's metadata directory and return the 
         # section's menu.
         sectionDir = section.get('name')
-        sectionMenu = sectionGenerator.generateSection(
+        sectionMenu = sectionRenderer.renderSection(
             section=section,
             targetDir=os.path.join(targetDir, sectionDir),
             sectionData=sectionData,
@@ -89,13 +89,13 @@ class SASIPediaGenerator(object):
         )
         return sectionMenu
 
-    def getSectionGenerator(self, section):
+    def getSectionRenderer(self, section):
         """
         Get a generator for a section.
         """
 
         # Default generator is CSV generator.
-        return section_generators.DefaultSectionGenerator()
+        return section_renderers.DefaultSectionRenderer()
 
     def getSectionReader(self, section):
         """
@@ -105,7 +105,7 @@ class SASIPediaGenerator(object):
         # Default generator is CSV generator.
         return section_readers.CSVSectionReader()
 
-    def generateIndexPage(self, indexFile="", menuItems=[]):
+    def renderIndexPage(self, indexFile="", menuItems=[]):
         """
         Generate a SASIPedia index page.
         """
