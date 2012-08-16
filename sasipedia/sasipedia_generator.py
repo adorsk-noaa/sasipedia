@@ -3,8 +3,8 @@ import shutil
 import sys
 
 import templates
-from default_section_generator import DefaultSectionGenerator
-from csv_section_reader import CSVSectionReader
+import section_readers
+import section_generators
 
 class SASIPediaGenerator(object):
     """
@@ -95,7 +95,7 @@ class SASIPediaGenerator(object):
         """
 
         # Default generator is CSV generator.
-        return DefaultSectionGenerator()
+        return section_generators.DefaultSectionGenerator()
 
     def getSectionReader(self, section):
         """
@@ -103,7 +103,7 @@ class SASIPediaGenerator(object):
         """
 
         # Default generator is CSV generator.
-        return CSVSectionReader()
+        return section_readers.CSVSectionReader()
 
     def generateIndexPage(self, indexFile="", menuItems=[]):
         """
