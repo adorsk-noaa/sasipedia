@@ -1,36 +1,6 @@
-#content{
-    margin: 0 15px;
-}
-
-h2, h3{
-    padding: 7px;
-    box-shadow: 2px 2px 3px #CCCCCC;
-}
-
-h2 {
-    margin: 0 0 10px;
-
-    background-color: #bcf;
-
-    color: #333;
-    font-size: 150%;
-    text-transform: uppercase;
-    font-family: sans;
-    font-style: italic;
-    
-}
-
 #content > ul > li{
     margin: 0 0 50px;
     padding: 5px 0;
-}
-
-h3.title{
-    margin: 0 0 15px 0;
-    background-color: #e3e9ff;
-
-    font-size: 125%;
-    font-family: sans;
 }
 
 .image {
@@ -38,10 +8,3 @@ h3.title{
     padding: 7px;
 }
 
-.description{
-}
-
-
-.clearfix{
-    clear: both;
-}
