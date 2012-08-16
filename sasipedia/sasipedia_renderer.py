@@ -74,7 +74,7 @@ class SASIPediaRenderer(object):
         sectionData = sectionReader.readSection(section=section)
 
         # Get section generator.
-        sectionRenderer= section.get('renderer')
+        sectionRenderer = section.get('renderer')
         if not sectionRenderer:
             sectionRenderer = self.getSectionRenderer(section)
 

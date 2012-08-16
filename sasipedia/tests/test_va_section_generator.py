@@ -1,13 +1,12 @@
-from sasipedia.sasipedia_generator import SASIPediaGenerator
+from sasipedia.sasipedia_renderer import SASIPediaRenderer
+import sasipedia.section_renderers as section_renderers
 
 import sys
 import os
 import shutil
 import tempfile
-import section_renderers
 
 def main():
-    #targetDir = tempfile.mkdtemp(suffix=".sasipedia")
     targetDir = "/tmp/sasipedia.vaSection"
     if os.path.exists(targetDir):
         shutil.rmtree(targetDir)
@@ -19,16 +18,16 @@ def main():
 
     sections = [
         {
-            'name': 'vulernabilityAssessment',
+            'name': 'va',
             'label': 'Vulnerability Assessment',
-            'dir': os.path.join(dataDir, 'substrates'),
+            'dir': os.path.join(dataDir, 'va'),
             'menuPath': 'va/index.html',
-            'renderer': section_renderers.VASectionRenderer
+            'renderer': section_renderers.VASectionRenderer()
         },
     ]
 
-    generator = SASIPediaGenerator()
-    generator.generateSASIPedia(
+    renderer = SASIPediaRenderer()
+    renderer.renderSASIPedia(
         targetDir=targetDir,
         dataDir=dataDir,
         sections=sections

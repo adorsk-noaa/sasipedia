@@ -1,4 +1,4 @@
-import templates
+import sasipedia.templates as templates
 from section_renderer import SectionRenderer
 
 
