@@ -1,0 +1,3 @@
+id,label,description,image
+znet,Znet,Znet is cumulative swept area.,
+zinf,Zinf,Zinf is cumulative swept area after the model has resolved to a steady state.,

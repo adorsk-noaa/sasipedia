@@ -14,7 +14,7 @@ def main():
     os.mkdir(targetDir)
 
     thisDir = os.path.dirname(os.path.realpath(__file__))
-    dataDir = os.path.join(thisDir, "..", "testData")
+    dataDir = os.path.join(thisDir, "examples", "dataDirExample")
 
     # Set location of overview file.
     overviewFile = os.path.join(dataDir, 'description.txt')
