@@ -1,10 +1,10 @@
 import os
 import shutil
-import sys
 
 import templates
 import section_readers
 import section_renderers
+
 
 class SASIPediaRenderer(object):
     """
@@ -54,16 +54,14 @@ class SASIPediaRenderer(object):
 
         # Create index page.
         self.renderIndexPage(
-            indexFile=indexFile, 
+            indexFile=indexFile,
             menuItems=menuItems
         )
-
 
     def renderSection(self, section={}, targetDir="", dataDir="", baseUrl=""):
         """
         Generate metadata for a section.
         """
-        print >> sys.stderr, "section is: ", section
 
         # Get section reader.
         sectionReader = section.get('reader')
@@ -78,7 +76,7 @@ class SASIPediaRenderer(object):
         if not sectionRenderer:
             sectionRenderer = self.getSectionRenderer(section)
 
-        # Generate the section's metadata directory and return the 
+        # Generate the section's metadata directory and return the
         # section's menu.
         sectionMenu = sectionRenderer.renderSection(
             section=section,
