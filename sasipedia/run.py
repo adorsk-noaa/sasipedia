@@ -17,20 +17,46 @@ def main():
     thisDir = os.path.dirname(os.path.realpath(__file__))
     dataDir = os.path.join(thisDir, "..", "testData")
 
-    sections = [
-        {
-            'name': 'substrates',
+    # Create basic section definitions.
+    sections = {
+        'substrates': {
             'label': 'Substrates',
-            'dir': os.path.join(dataDir, 'substrates'),
-            'menuPath': 'substrates/index.html',
         },
+        'map_layers': {
+            'label': 'Map Layers',
+        },
+    }
+
+    # Decorate sections w/ defaults.
+    for sectionId, section in sections.items():
+        section['id'] = sectionId
+        section['dir'] = os.path.join(dataDir, sectionId)
+        section['metadataFile'] = os.path.join(dataDir, sectionId, 'metadata', 
+                                               '%s.csv' % sectionId)
+        section['metadataAssetsDir'] = os.path.join(dataDir, sectionId, 'metadata',
+                                           'assets')
+        section['menuBasePath'] = sectionId
+
+    # Customize substrates to use data file as metadat file.
+    for sectionId in ['substrates']:
+        section = sections[sectionId]
+        section['metadataFile'] = os.path.join(dataDir, sectionId, 'data',
+                                               '%s.csv' % sectionId)
+
+    # Set order for sections.
+    orderedSectionIds = [
+        'substrates',
+        'map_layers'
     ]
+    orderedSections = []
+    for sectionId in orderedSectionIds:
+        orderedSections.append(sections[sectionId])
 
     renderer = SASIPediaRenderer()
     renderer.renderSASIPedia(
         targetDir=targetDir,
         dataDir=dataDir,
-        sections=sections
+        sections=orderedSections,
     )
 
 if __name__ == '__main__':

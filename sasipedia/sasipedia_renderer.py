@@ -80,10 +80,9 @@ class SASIPediaRenderer(object):
 
         # Generate the section's metadata directory and return the 
         # section's menu.
-        sectionDir = section.get('name')
         sectionMenu = sectionRenderer.renderSection(
             section=section,
-            targetDir=os.path.join(targetDir, sectionDir),
+            targetDir=os.path.join(targetDir, section['id']),
             sectionData=sectionData,
             baseUrl="%s../" % baseUrl
         )

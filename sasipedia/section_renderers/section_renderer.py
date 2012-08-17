@@ -15,16 +15,12 @@ class SectionRenderer(object):
         if not os.path.exists(targetDir):
             os.makedirs(targetDir)
 
-        # Setup the assets dir.
-        assetsDir = os.path.join(targetDir, "assets")
-        if not os.path.exists(assetsDir):
-            os.makedirs(assetsDir)
-
-        # Copy images.
-        imagesSrcDir = os.path.join(section.get('dir'), 'images')
-        if os.path.exists(imagesSrcDir):
-            imagesTargetDir = os.path.join(assetsDir, "images")
-            shutil.copytree(imagesSrcDir, imagesTargetDir)
+        # Copy the assets dir (if it exists).
+        assetsRelativePath = "assets"
+        assetsSrcDir = section.get('metadataAssetsDir')
+        if assetsSrcDir and os.path.isdir(assetsSrcDir):
+            assetsTargetDir = os.path.join(targetDir, assetsRelativePath)
+            shutil.copytree(assetsSrcDir, assetsTargetDir)
 
         # Generate the index file.
         indexFile = os.path.join(targetDir, "index.html")
@@ -32,7 +28,7 @@ class SectionRenderer(object):
             section=section,
             sectionData=sectionData,
             indexFile=indexFile,
-            imagesDir="assets/images",
+            assetsDir=assetsRelativePath,
             baseUrl=baseUrl
         )
 
@@ -40,7 +36,7 @@ class SectionRenderer(object):
         return self.generateMenu(section=section, sectionData=sectionData)
 
     def renderIndexFile(self, section={}, sectionData=[], indexFile=None,
-                          imagesDir="", baseUrl=""):
+                          assetsDir="", baseUrl=""):
         """
         Renders a section index file from section data.
         """
@@ -52,7 +48,7 @@ class SectionRenderer(object):
             baseUrl=baseUrl,
             section=section,
             sectionData=sectionData,
-            imagesDir=imagesDir,
+            assetsDir=assetsDir,
         )
         fh.write(content)
         fh.close()
