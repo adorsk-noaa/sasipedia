@@ -4,21 +4,23 @@ from section_renderer import SectionRenderer
 
 class DefaultSectionRenderer(SectionRenderer):
 
-    indexTemplate = templates.env.get_template('default_section_index.html')
+    def __init__(self, **kwargs):
+        super(DefaultSectionRenderer, self).__init__(**kwargs)
+        if not self.indexTemplate:
+            template = templates.env.get_template('default_section_index.html')
+            self.indexTemplate = template
 
     def generateMenu(self, section={}, sectionData=[]):
-        basePath = section.get('menuBasePath')
-
-        # Initialize menu with section link.
-        indexPath = '%s/index.html' % basePath
-        menu = {
-            'href': indexPath,
-            'label': section.get('label')
-        }
+        # Get default menu item for section.
+        menu = super(DefaultSectionRenderer, self).generateMenu(
+            section=section,
+            sectionData=sectionData
+        )
 
         # If there were rows , add menu items for them.
         if sectionData.get('rows'):
             menu['children'] = []
+            indexPath = menu['href']
             for row in sectionData['rows']:
                 menuItem = {
                     'href': "%s#%s" % (indexPath, row.get('id')),

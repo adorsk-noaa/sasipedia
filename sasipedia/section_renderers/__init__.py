@@ -1,2 +1,2 @@
+from section_renderer import SectionRenderer
 from default_section_renderer import DefaultSectionRenderer
-from va_section_renderer import VASectionRenderer

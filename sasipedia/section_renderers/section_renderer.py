@@ -4,7 +4,8 @@ import shutil
 
 class SectionRenderer(object):
 
-    indexTemplate = None
+    def __init__(self, indexTemplate=None):
+        self.indexTemplate = indexTemplate
 
     """
     Renders a metadata directory for a given section.
@@ -53,5 +54,14 @@ class SectionRenderer(object):
         fh.write(content)
         fh.close()
 
-    def generateMenu(self):
-        pass
+    def generateMenu(self, section={}, sectionData=[]):
+        """
+        Default menu generation function.
+        Most subclasses will override or wrap this.
+        """
+        # Initialize menu with section link.
+        menu = {
+            'href': '%s/index.html' % section.get('menuBasePath'),
+            'label': section.get('label')
+        }
+        return menu

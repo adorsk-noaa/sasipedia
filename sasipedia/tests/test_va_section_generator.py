@@ -1,10 +1,11 @@
 from sasipedia.sasipedia_renderer import SASIPediaRenderer
 import sasipedia.section_renderers as section_renderers
+import sasipedia.templates as templates
 
 import sys
 import os
 import shutil
-import tempfile
+
 
 def main():
     targetDir = "/tmp/sasipedia.vaSection"
@@ -17,14 +18,32 @@ def main():
     dataDir = os.path.join(thisDir, "..", "..", "testData")
 
     sections = [
-        {
-            'name': 'va',
-            'label': 'Vulnerability Assessment',
-            'dir': os.path.join(dataDir, 'va'),
-            'menuPath': 'va/index.html',
-            'renderer': section_renderers.VASectionRenderer()
-        },
+        {'id': 'va', 'label': 'Vulnerability Assessment'},
     ]
+
+    # Decorate sections w/ defaults.
+    for section in sections:
+        section['dir'] = os.path.join(dataDir, section['id'])
+        section['metadataFile'] = os.path.join(dataDir, section['id'],
+            'metadata', '%s.csv' % section['id'])
+        section['metadataAssetsDir'] = os.path.join(dataDir, section['id'],
+            'metadata', 'assets')
+        section['menuBasePath'] = section['id']
+
+    # Create sections lookup.
+    sectionsDict = {}
+    for section in sections:
+        sectionsDict[section['id']] = section
+
+    # Customize va to use data file as metadata file,
+    # and to use custom renderer.
+    for sectionId in ['va']:
+        section = sectionsDict[sectionId]
+        section['metadataFile'] = os.path.join(dataDir, section['id'], 'data',
+                                               '%s.csv' % section['id'])
+        section['renderer'] = section_renderers.SectionRenderer(
+            indexTemplate=templates.env.get_template('va_section_index.html')
+        )
 
     renderer = SASIPediaRenderer()
     renderer.renderSASIPedia(
