@@ -1,4 +1,5 @@
 import csv
+import os
 
 
 class CSVSectionReader(object):
@@ -10,18 +11,23 @@ class CSVSectionReader(object):
         self.filters = filters
 
     def readSection(self, section):
-        reader = csv.DictReader(open(section['metadataFile'], "rb"))
-        rows = []
-        for row in reader:
-            passes = True
-            for f in self.filters:
-                if not f(row):
-                    passes = False
-                    break
-            if passes:
-                rows.append(row)
+        if not os.path.isfile(section['metadataFile']):
+            fieldnames = []
+            rows = []
+        else:
+            reader = csv.DictReader(open(section['metadataFile'], "rb"))
+            fieldnames = reader.fieldnames
+            rows = []
+            for row in reader:
+                passes = True
+                for f in self.filters:
+                    if not f(row):
+                        passes = False
+                        break
+                if passes:
+                    rows.append(row)
 
         return {
-            'fieldnames': reader.fieldnames,
+            'fieldnames': fieldnames,
             'rows': rows,
         }
