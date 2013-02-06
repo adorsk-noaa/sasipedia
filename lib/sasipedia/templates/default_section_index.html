@@ -11,7 +11,7 @@
             {% for row in sectionData['rows'] %}
             <li>
                 <a name="{{row.id}}"></a>
-                <h3 div class="title">{{row.label}}</h3>
+                <h3 div class="title">{{row.label|default(row.id)}}</h3>
 
                 {% if row.image  %}
                 <div class="image">

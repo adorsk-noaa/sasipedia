@@ -11,6 +11,14 @@ class DefaultSectionRenderer(SectionRenderer):
             self.indexTemplate = template
 
     def generateMenu(self, section={}, sectionData=[]):
+
+        # Sort rows if sorting flag set.
+        if section.get('sort'):
+            def sortFunc(row):
+                return row.get('label', row.get('id'))
+            if (sectionData['rows']):
+                sectionData['rows'].sort(key=sortFunc)
+
         # Get default menu item for section.
         menu = super(DefaultSectionRenderer, self).generateMenu(
             section=section,
@@ -24,7 +32,7 @@ class DefaultSectionRenderer(SectionRenderer):
             for row in sectionData['rows']:
                 menuItem = {
                     'href': "%s#%s" % (indexPath, row.get('id')),
-                    'label': row.get('label')
+                    'label': row.get('label', row.get('id', 'Unknown'))
                 }
                 menu['children'].append(menuItem)
 

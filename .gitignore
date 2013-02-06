@@ -1,3 +1,4 @@
 py2.7
 *.pyc
+*.class
 testData
