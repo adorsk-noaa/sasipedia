@@ -20,7 +20,6 @@ def generate_sasipedia(targetDir=None, dataDir=None):
         {'id': 'energies', 'label': 'Habitat Energy'},
         {'id': 'efforts', 'label': 'Fishing Efforts'},
         {'id': 'model_parameters', 'label': 'Model Parameters'},
-        {'id': 'map_layers', 'label': 'Map Layers'},
         {'id': 'glossary', 'label': 'Glossary'},
         {'id': 'va', 'label': 'Vulnerability Assessment'},
     ]
