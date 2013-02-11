@@ -2,7 +2,7 @@
     margin: 0 15px;
 }
 
-h2, h3{
+h2, h3, h4{
     padding: 7px;
     box-shadow: 2px 2px 3px #CCCCCC;
 }
@@ -28,3 +28,9 @@ h3.title{
     font-family: sans;
 }
 
+h4.title{
+    background-color: #e7edff;
+    font-size: 110%;
+    font-family: sans;
+    box-shadow: inherit;
+}

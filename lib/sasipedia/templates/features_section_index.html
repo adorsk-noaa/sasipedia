@@ -1,0 +1,52 @@
+{% extends "section.html" %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{baseUrl}}assets/styles/defaultSection.css" />
+{% endblock %}
+
+{% block content %}
+{{super()}}
+        <ul>
+            {% for category in sectionData.categories|default([]) %}
+            <li>
+                <a name="{{category.id}}"></a>
+                <h3 div class="title">{{category.label|default(category.id)}}</h3>
+                {% if category.description %}
+                <div class="description">
+                    <p>
+                        {{ category.description }}
+                    </p>
+                </div>
+                {% endif %}
+
+                {% if category.features %}
+                <ul>
+                    {% for feature in category.features %}
+                    <li>
+                        <a name="{{category.id}}__{{feature.id}}"></a>
+                        <h4 div class="title">{{feature.label|default(feature.id)}}</h3>
+
+                        {% if category.description %}
+                        <div class="description">
+                            <p>
+                            {{ feature.description }}
+                            </p>
+                        </div>
+                        {% endif %}
+
+                        {% if feature.image  %}
+                        <div class="image">
+                            <img src="{{assetsDir}}/{{feature.image}}"/>
+                        </div>
+
+                        {% endif %}
+                        <div class="clearfix"></div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+{% endblock %}

@@ -59,13 +59,13 @@ class SASIPediaRenderer(object):
         Generate metadata for a section.
         """
 
-        # Get section reader.
-        sectionReader = section.get('reader')
-        if not sectionReader:
-            sectionReader = self.getSectionReader(section)
-
-        # Get section data.
-        sectionData = sectionReader.readSection(section=section)
+        # Get section reader if no data provided.
+        sectionData = section.get('data')
+        if sectionData is None:
+            sectionReader = section.get('reader')
+            if not sectionReader:
+                sectionReader = self.getSectionReader(section)
+            sectionData = sectionReader.readSection(section=section)
 
         # Get section generator.
         sectionRenderer = section.get('renderer')

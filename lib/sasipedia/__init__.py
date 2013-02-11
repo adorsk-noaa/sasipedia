@@ -46,35 +46,45 @@ def generate_sasipedia(targetDir=None, dataDir=None):
             section['metadataFile'] = os.path.join(dataDir, section['id'],
                 'data', '%s.csv' % section['id'])
 
-    # Add in sections for feature categories.
+    # Add in features section.
     featureCategoriesPath = os.path.join(dataDir, 'feature_categories', 'data',
                                          'feature_categories.csv')
     featuresDir = os.path.join(dataDir, 'features')
+    featuresPath = os.path.join(featuresDir, 'data', 'features.csv')
+
+    # Get feature rows.
+    featureRows = {}
+    if os.path.isfile(featuresPath):
+        with open(featuresPath, 'rb') as f:
+            featureRows = [row for row in csv.DictReader(f)]
+
+    featuresData = {'categories': []}
     if os.path.isfile(featureCategoriesPath):
-
-        def getFilterFn(category_id):
-            def categoryFilter(row):
-                return row['category'] == category_id
-            return categoryFilter
-
         with open(featureCategoriesPath, 'rb') as f:
-            for category_row in csv.DictReader(f):
-                sectionId = 'feature_category_' + category_row['id']
-                section = {
-                    'dir': featuresDir,
-                    'id': sectionId,
-                    'label': category_row['label'],
-                    'metadataFile': os.path.join(featuresDir, 'data', 
-                                                 'features.csv'),
-                    'description': category_row.get('description'),
-                    'menuBasePath': sectionId,
-                    'sort': True,
-                }
+            for categoryRow in csv.DictReader(f):
+                categoryFeatures = []
+                for featureRow in featureRows:
+                    if featureRow.get('category') == categoryRow['id']:
+                        categoryFeatures.append(featureRow)
+                categoryFeatures.sort(
+                    key=lambda r: row.get('label', row.get('id')))
+                featuresData['categories'].append({
+                    'id': categoryRow['id'],
+                    'label': categoryRow.get('label'),
+                    'description': categoryRow.get('description'),
+                    'features': categoryFeatures,
+                })
 
-
-                section['reader'] = section_readers.CSVSectionReader(
-                    filters=[getFilterFn(category_row['id'])])
-                sections.append(section)
+    featuresSection = {
+        'dir': featuresDir,
+        'id': 'features',
+        'label': 'Features',
+        'menuBasePath': 'features',
+        'data': featuresData,
+        'sort': True,
+        'renderer': section_renderers.FeaturesSectionRenderer()
+    }
+    sections.append(featuresSection)
 
     # Customize sections which use description.txt files
     # for metadata.
