@@ -2,12 +2,9 @@
     margin: 0 15px;
 }
 
-h2, h3, h4{
+#content > h2 {
     padding: 7px;
     box-shadow: 2px 2px 3px #CCCCCC;
-}
-
-h2 {
     margin: 0 0 10px;
 
     background-color: #bcf;
@@ -17,10 +14,11 @@ h2 {
     text-transform: uppercase;
     font-family: sans;
     font-style: italic;
-    
 }
 
-h3.title{
+#content > ul > li > h3.title{
+    padding: 7px;
+    box-shadow: 2px 2px 3px #CCCCCC;
     margin: 0 0 15px 0;
     background-color: #e3e9ff;
 
@@ -28,7 +26,9 @@ h3.title{
     font-family: sans;
 }
 
-h4.title{
+#content > ul > li > ul > li > h4.title{
+    padding: 7px;
+    box-shadow: 2px 2px 3px #CCCCCC;
     background-color: #e7edff;
     font-size: 110%;
     font-family: sans;

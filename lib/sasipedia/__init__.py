@@ -10,7 +10,7 @@ import os
 def generate_sasipedia(targetDir=None, dataDir=None):
 
     # Set location of overview file.
-    overviewFile = os.path.join(dataDir, 'description.txt')
+    overviewFile = os.path.join(dataDir, 'description.html')
 
     # Create basic section definitions, in the
     # order in which the sections should be listed.
@@ -18,9 +18,6 @@ def generate_sasipedia(targetDir=None, dataDir=None):
         {'id': 'substrates', 'label': 'Substrates'},
         {'id': 'gears', 'label': 'Gears'},
         {'id': 'energies', 'label': 'Habitat Energy'},
-        {'id': 'efforts', 'label': 'Fishing Efforts'},
-        {'id': 'model_parameters', 'label': 'Model Parameters'},
-        {'id': 'glossary', 'label': 'Glossary'},
         {'id': 'va', 'label': 'Vulnerability Assessment'},
     ]
 
@@ -86,18 +83,22 @@ def generate_sasipedia(targetDir=None, dataDir=None):
     }
     sections.append(featuresSection)
 
-    # Customize sections which use description.txt files
-    # for metadata.
-    for sectionId in ['efforts', 'model_parameters']:
-        section = sectionsDict.get(sectionId)
-        if (section):
-            indexTemplate = templates.env.get_template('content_section_index.html')
-            section['metadataFile'] = os.path.join(dataDir, section['id'],
-                'metadata', 'description.txt')
-            section['reader'] = section_readers.FileSectionReader()
-            section['renderer'] = section_renderers.SectionRenderer(
-                indexTemplate=indexTemplate
-            )
+    # Generate model parameters section.
+    paramsPath = os.path.join(dataDir, 'model_parameters.csv')
+    if os.path.isfile(paramsPath):
+        with open(paramsPath, 'rb') as f:
+            params = csv.DictReader(f).next()
+
+        paramsSection = {
+            'id': 'model_parameters',
+            'label': 'Model Parameters',
+            'menuBasePath': 'model_parameters',
+            'data': {
+                'params': params
+            },
+            'renderer': section_renderers.ParametersSectionRenderer()
+        }
+        sections.append(paramsSection)
 
     # Customize va.
     for sectionId in ['va']:

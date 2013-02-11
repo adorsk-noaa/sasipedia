@@ -54,7 +54,7 @@ class SectionRenderer(object):
         fh.write(content)
         fh.close()
 
-    def generateMenu(self, section={}, sectionData=[]):
+    def generateMenu(self, section={}, **kwargs):
         """
         Default menu generation function.
         Most subclasses will override or wrap this.

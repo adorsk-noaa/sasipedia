@@ -1,3 +1,4 @@
 from section_renderer import SectionRenderer
 from default_section_renderer import DefaultSectionRenderer
 from features_section_renderer import FeaturesSectionRenderer
+from parameters_section_renderer import ParametersSectionRenderer
