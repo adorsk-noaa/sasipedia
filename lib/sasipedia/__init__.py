@@ -24,10 +24,6 @@ def generate_sasipedia(targetDir=None, dataDir=None):
     # Decorate sections w/ defaults.
     for section in sections:
         section['dir'] = os.path.join(dataDir, section['id'])
-        section['metadataFile'] = os.path.join(dataDir, section['id'],
-            'metadata', '%s.csv' % section['id'])
-        section['metadataAssetsDir'] = os.path.join(dataDir, section['id'],
-            'metadata', 'assets')
         section['menuBasePath'] = section['id']
 
     # Create sections lookup.
@@ -39,15 +35,12 @@ def generate_sasipedia(targetDir=None, dataDir=None):
     # with the data.
     for sectionId in ['substrates', 'gears', 'va', 'energies']:
         section = sectionsDict.get(sectionId)
-        if (section):
-            section['metadataFile'] = os.path.join(dataDir, section['id'],
-                'data', '%s.csv' % section['id'])
+        section['metadataFile'] = os.path.join(
+            dataDir, '%s.csv' % section['id'])
 
     # Add in features section.
-    featureCategoriesPath = os.path.join(dataDir, 'feature_categories', 'data',
-                                         'feature_categories.csv')
-    featuresDir = os.path.join(dataDir, 'features')
-    featuresPath = os.path.join(featuresDir, 'data', 'features.csv')
+    featureCategoriesPath = os.path.join(dataDir, 'feature_categories.csv')
+    featuresPath = os.path.join(dataDir, 'features.csv')
 
     # Get feature rows.
     featureRows = {}
@@ -73,7 +66,6 @@ def generate_sasipedia(targetDir=None, dataDir=None):
                 })
 
     featuresSection = {
-        'dir': featuresDir,
         'id': 'features',
         'label': 'Features',
         'menuBasePath': 'features',

@@ -13,12 +13,6 @@
                 <a name="{{row.id}}"></a>
                 <h3 div class="title">{{row.label|default(row.id)}}</h3>
 
-                {% if row.image  %}
-                <div class="image">
-                    <img src="{{assetsDir}}/{{row.image}}"/>
-                </div>
-                {% endif %}
-
                 {% if row.description %}
                 <div class="description">
                     <p>
@@ -26,8 +20,7 @@
                     </p>
                 </div>
                 {% endif %}
-                <div class="clearfix">
-                </div>
+
             </li>
             {% endfor %}
         </ul>
