@@ -1,0 +1,35 @@
+{% extends "section.html" %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{baseUrl}}assets/styles/defaultSection.css" />
+{% endblock %}
+
+{% block content %}
+{{super()}}
+        <ul>
+            {% for row in sectionData['rows'] %}
+            <li>
+                <a name="{{row.id}}"></a>
+                <h3 div class="title">{{row.label|default(row.id)}}</h3>
+
+                {% for minmax in ['min', 'max'] %}
+                {% if row[minmax + '_depth'] != '' %}
+                <div class="depth">
+                    {{minmax|capitalize}} Depth: {{row[minmax + '_depth']}} m
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                {% if row.description %}
+                <div class="description">
+                    <p>
+                        {{ row.description }}
+                    </p>
+                </div>
+                {% endif %}
+
+            </li>
+            {% endfor %}
+        </ul>
+{% endblock %}
