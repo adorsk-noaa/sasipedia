@@ -16,7 +16,11 @@ def generate_sasipedia(targetDir=None, dataDir=None):
     # order in which the sections should be listed.
     sections = [
         {'id': 'substrates', 'label': 'Substrates'},
-        {'id': 'gears', 'label': 'Gears'},
+        {'id': 'gears', 'label': 'Gears',
+         'renderer': section_renderers.DefaultSectionRenderer(
+             indexTemplate=templates.env.get_template(
+                 'gears_section_index.html'))
+        },
         {'id': 'energies', 'label': 'Habitat Energy'},
         {'id': 'va', 'label': 'Vulnerability Assessment'},
     ]
