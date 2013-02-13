@@ -13,6 +13,14 @@
                 <a name="{{row.id}}"></a>
                 <h3 div class="title">{{row.label|default(row.id)}}</h3>
 
+                {% if row.id %}
+                <div class="id">
+                    <p>
+                        ID: {{ row.id}}
+                    </p>
+                </div>
+                {% endif %}
+
                 {% if row.description %}
                 <div class="description">
                     <p>

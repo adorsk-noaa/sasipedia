@@ -27,6 +27,15 @@
                         <a name="{{category.id}}__{{feature.id}}"></a>
                         <h4 div class="title">{{feature.label|default(feature.id)}}</h3>
 
+                        {% if feature.id %}
+                        <div class="id">
+                            <p>
+                            ID: {{ feature.id}}
+                            </p>
+                        </div>
+                        {% endif %}
+
+
                         {% if category.description %}
                         <div class="description">
                             <p>
