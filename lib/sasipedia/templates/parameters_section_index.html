@@ -63,6 +63,16 @@
             </td>
         </tr>
         {% endfor %}
+        <tr>
+            <td>fishing effort model</td>
+            <td>
+                {% if sectionData.params.effort_model == 'realized' %}
+                From data.
+                {% else %}
+                Generated.
+                {% endif %}
+            </td>
+        </tr>
     </tbody>
 </table>
 

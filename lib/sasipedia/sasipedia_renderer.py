@@ -11,7 +11,7 @@ class SASIPediaRenderer(object):
     A Class for rendering SASIPedia metadata.
     """
     def renderSASIPedia(self, targetDir=None, dataDir=None, sections=None,
-                          overviewFile="", baseUrl=""):
+                        baseUrl=""):
         """
         Render a set of static 'SASIpedia' pages at the given target
         directory.
@@ -35,12 +35,6 @@ class SASIPediaRenderer(object):
 
         # Initialize list of menu items.
         menuItems = []
-
-        # Create overview page.
-        overviewMenu = self.renderOverviewPage(
-            targetDir=targetDir, dataDir=dataDir, baseUrl=baseUrl,
-            overviewFile=overviewFile)
-        menuItems.append(overviewMenu)
 
         # Define the index file path.
         indexFile = os.path.join(targetDir, "index.html")
@@ -97,34 +91,6 @@ class SASIPediaRenderer(object):
 
         # Default generator is CSV generator.
         return section_readers.CSVSectionReader()
-
-    def renderOverviewPage(self, targetDir="", dataDir="", baseUrl="",
-                           overviewFile=""):
-        """
-        Render an overvie page.
-        """
-
-        # Get the overview content.
-        overviewContent = ""
-        if os.path.isfile(overviewFile):
-            overviewContent += open(overviewFile, "rb").read()
-
-        # Generate page via template.
-        template = templates.env.get_template('content_section_index.html')
-        pageContent = template.render(
-            pageId='overview',
-            section={'label': 'Overview'},
-            sectionData={'content': overviewContent} 
-        )
-
-        targetFile = os.path.join(targetDir, "overview.html")
-        targetFh = open(targetFile, "wb")
-        targetFh.write(pageContent)
-        targetFh.close()
-        return {
-            "label": "Overview",
-            "href": "overview.html"
-        }
 
     def renderIndexPage(self, indexFile="", menuItems=[]):
         """

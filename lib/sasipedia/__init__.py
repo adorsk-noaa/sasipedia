@@ -9,9 +9,6 @@ import os
 
 def generate_sasipedia(targetDir=None, dataDir=None):
 
-    # Set location of overview file.
-    overviewFile = os.path.join(dataDir, 'description.html')
-
     # Create basic section definitions, in the
     # order in which the sections should be listed.
     sections = [
@@ -109,6 +106,5 @@ def generate_sasipedia(targetDir=None, dataDir=None):
     renderer.renderSASIPedia(
         targetDir=targetDir,
         dataDir=dataDir,
-        overviewFile=overviewFile,
         sections=sections,
     )
